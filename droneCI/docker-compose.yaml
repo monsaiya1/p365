@@ -1,23 +1,26 @@
-
-version: '2'
+version: '3.8'
 
 services:
-  drone-server:
-    container_name: drone
-    image: drone/drone:2.24
+  drone:
+    image: 'drone/drone:2.24'
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./volumes/drone:/data"
+      - '/etc/localtime:/etc/localtime:ro'
+    restart: always
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+    env_file:
+    - .env  
+  
+  drone-agent:
+    image: drone/drone-runner-docker:1.8.3
+    command: agent
+    restart: always
+    depends_on:
+      - drone
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./data:/var/lib/drone/
-    restart: always
-    environment:
-      - DRONE_GIT_ALWAYS_AUTH=false
-      - DRONE_TLS_AUTOCERT=false
-      - DRONE_GITHUB_SERVER=https://github.com
-      - DRONE_GITHUB_CLIENT_ID=Ov23liQaELwrwlhBZ2C9
-      - DRONE_GITHUB_CLIENT_SECRET=a847e391bde0e743ad4729a99fad60991854119e
-      - DRONE_RUNNER_CAPACITY=2 
-      - DRONE_SERVER_HOST=5ed5-58-8-179-113.ngrok-free.app
-      - DRONE_SERVER_PROTO=http
+      - '/etc/localtime:/etc/localtime:ro'
+    env_file:
+      - .env

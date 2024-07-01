@@ -1,18 +1,16 @@
----
 kind: pipeline
 type: docker
-name: default
-
-platform:
-  os: darwin
-  arch: arm64
+name: hello-world
 
 steps:
-- name: hello
-  image: busybox
-  commands:
-  - echo hello monsaiya
- 
-trigger:
-  branch:
-  - main
+- name: docker  
+  image: plugins/docker
+  settings:
+    # registry: docker.io
+    repo: pavansa/bangaloretour
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    tags: 
+      - latest
