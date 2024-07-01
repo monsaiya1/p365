@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: 'Hello MonSaiYa Docker 3',
+  name: 'Hello MonSaiYa Docker 4',
   props: {
     msg: String
   }
