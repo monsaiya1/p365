@@ -8,7 +8,6 @@ steps:
     commands:
       - npm install
       - npm run build
-      - docker build -t monsaiya:latest .
 
   - name: publish
     image: plugins/docker
