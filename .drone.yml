@@ -7,17 +7,33 @@ steps:
     image: node:20.15.1
     commands:
       - npm install
-      - npm run build
+  #     - npm run build
+
+  # - name: publish
+  #   image: plugins/docker
+  #   settings:
+  #     repo: monsaiya/monsaiya
+  #     username:
+  #       from_secret: docker_username
+  #     password:
+  #       from_secret: docker_password
+  #     tags: latest
 
   - name: publish
-    image: plugins/docker
+    image: plugins/ecr
     settings:
-      repo: monsaiya/monsaiya
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
-      tags: latest
+      access_key:
+        from_secret: ecr_access_key
+      secret_key:
+        from_secret: ecr_secret_key
+      repo:
+        from_secret: ecr_repo
+      registry:
+        from_secret: ecr_registry
+      region:
+        from_secret: ecr_region
+      tags:
+        - latest
 
 trigger:
   branch:
