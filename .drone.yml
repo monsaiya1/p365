@@ -20,7 +20,7 @@ steps:
   #     tags: latest
 
   - name: publish
-    image: plugins/ecr:20.18
+    image: plugins/ecr:20.18.3-linux-amd64
     settings:
       access_key:
         from_secret: ecr_access_key
